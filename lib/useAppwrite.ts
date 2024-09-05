@@ -8,7 +8,6 @@ const useAppwrite = (fn: () => any) => {
     setIsLoading(true);
     try {
       const response = await fn();
-        console.log(response);
       setData(response);
     } catch (error) {
       console.log(error);
@@ -21,7 +20,6 @@ const useAppwrite = (fn: () => any) => {
     fetchData();
   }, []);
   const refetch = () => fetchData();
-//   console.log(data);
   return { data, refetch };
 };
 

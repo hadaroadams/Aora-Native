@@ -1,30 +1,21 @@
-import { FlatList, Image, RefreshControl, Text, View } from "react-native";
+import { FlatList, Image, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import SearchInput from "@/component/SearchInput";
-import Trending from "@/component/Trending";
 import EmptyState from "@/component/EmptyState";
-import { getAllPosts, getAllTrendingPost, getSearchPost } from "@/lib/appwrite";
+import { getSearchPost } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import VideoCard from "@/component/VideoCard";
 import { useLocalSearchParams } from "expo-router";
 
-const Home = () => {
+const Search = () => {
   const { query } = useLocalSearchParams();
-  const { data: seachPost, refetch } = useAppwrite(() => {
-    getSearchPost(query);
-  });
-  const [refreshing, setRefreshing] = useState(false);
-  // console.log(2,post);
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await refetch();
-    setRefreshing(false);
-  };
-  console.log(seachPost);
+  const { data: seachPost, refetch } = useAppwrite(() => getSearchPost(query));
+  console.log(2, query);
+  // console.log(seachPost);
   useEffect(() => {
-    onRefresh();
+    refetch();
   }, [query]);
   return (
     <SafeAreaView className="bg-primary min-h-full ">
@@ -67,4 +58,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Search;

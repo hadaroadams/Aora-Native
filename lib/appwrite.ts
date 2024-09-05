@@ -121,7 +121,7 @@ export const getAllTrendingPost = async () => {
 };
 export const getSearchPost = async (query: any) => {
   try {
-    console.log(query);
+    // console.log(3, query);
     const post = await databases.listDocuments(databaseId, vidoeCollectionId, [
       Query.search("title", query),
     ]);
@@ -129,6 +129,29 @@ export const getSearchPost = async (query: any) => {
     // console.log(2, post);
     return post.documents;
   } catch (error) {
+    throw error;
+  }
+};
+export const getUserPost = async (userId: any) => {
+  try {
+    // console.log(3, query);
+    const post = await databases.listDocuments(databaseId, vidoeCollectionId, [
+      Query.equal("users", userId),
+    ]);
+
+    // console.log(2, post);
+    return post.documents;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const signOut = async () => {
+  try {
+    const session = await account.deleteSession("current");
+    return session;
+  } catch (error) {
+    // console.log(error);
     throw error;
   }
 };

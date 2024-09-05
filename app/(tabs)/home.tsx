@@ -8,11 +8,12 @@ import EmptyState from "@/component/EmptyState";
 import { getAllPosts, getAllTrendingPost, getSearchPost } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import VideoCard from "@/component/VideoCard";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const Home = () => {
+  const { user } = useGlobalContext()!;
   const { data: post, refetch } = useAppwrite(getAllPosts);
   const { data: latestPost } = useAppwrite(getAllTrendingPost);
-  const { data: seachPost } = useAppwrite(getSearchPost("Meet") as any);
 
   const [refreshing, setRefreshing] = useState(false);
   // console.log(2,post);
@@ -36,7 +37,7 @@ const Home = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  jsmastery
+                  {user.username}
                 </Text>
               </View>
               <View>
