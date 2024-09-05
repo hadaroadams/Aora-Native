@@ -113,7 +113,20 @@ export const getAllTrendingPost = async () => {
       Query.orderDesc("$createdAt"),
       Query.limit(7),
     ]);
-    console.log(2,post);
+    // console.log(2,post);
+    return post.documents;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getSearchPost = async (query: any) => {
+  try {
+    console.log(query);
+    const post = await databases.listDocuments(databaseId, vidoeCollectionId, [
+      Query.search("title", query),
+    ]);
+
+    // console.log(2, post);
     return post.documents;
   } catch (error) {
     throw error;

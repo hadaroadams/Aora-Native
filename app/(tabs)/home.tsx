@@ -5,13 +5,15 @@ import { images } from "@/constants";
 import SearchInput from "@/component/SearchInput";
 import Trending from "@/component/Trending";
 import EmptyState from "@/component/EmptyState";
-import { getAllPosts, getAllTrendingPost } from "@/lib/appwrite";
+import { getAllPosts, getAllTrendingPost, getSearchPost } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import VideoCard from "@/component/VideoCard";
 
 const Home = () => {
   const { data: post, refetch } = useAppwrite(getAllPosts);
   const { data: latestPost } = useAppwrite(getAllTrendingPost);
+  const { data: seachPost } = useAppwrite(getSearchPost("Meet") as any);
+
   const [refreshing, setRefreshing] = useState(false);
   // console.log(2,post);
   const onRefresh = async () => {
@@ -45,7 +47,7 @@ const Home = () => {
                 />
               </View>
             </View>
-            <SearchInput placeHolder="Search for a video topic" />
+            <SearchInput initialQuery="" />
             <View className="w-full flex-1 pt-8">
               <Text className="text-grey-100 text-lg font-pregular ">
                 Trending Videos
