@@ -14,7 +14,7 @@ const VideoCard = ({
   video: any;
 }) => {
   const [play, setPlay] = useState(false);
-  //   console.log(avatar);
+  console.log(vid);
   return (
     <View className="flex-col items-center px-4 mb-14">
       <View className="flex-row gap-3 items-start">
