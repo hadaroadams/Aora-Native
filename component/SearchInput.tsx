@@ -13,7 +13,7 @@ import { router, usePathname } from "expo-router";
 const SearchInput = ({ initialQuery }: { initialQuery: string }) => {
   const pathname = usePathname();
   const [query, setQuery] = useState(initialQuery);
-  // console.log(2, pathname);
+  console.log(2, pathname);
   return (
     <View className="bg-black-100 w-full h-16  px-4 rounded-2xl focus:border-2 focus:border-secondary items-center flex-row space-x-4">
       <TextInput

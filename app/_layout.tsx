@@ -27,7 +27,7 @@ const RootLayOut = () => {
   }, [fontsLoaded, error]);
 
   if (!fontsLoaded && !error) return null;
-  // console.log("hello");
+  console.log("hello");
   return (
     <>
       {/* <View style={styles.container}>

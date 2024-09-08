@@ -75,11 +75,11 @@ const TrendingItem = ({ activeItem, item }: any) => {
 
 const Trending = ({ latestPost }: any) => {
   // const { latestPost } = posts;
-  // console.log(1, latestPost[0]);
+  console.log(1, latestPost[0]);
   const [activeItem, setActiveItem] = useState(0);
-  // console.log(activeItem);
+  console.log(activeItem);
   const viewableItemsChanged = ({ viewableItems }: any) => {
-    // console.log(viewableItems);
+    console.log(viewableItems);
     if (viewableItems.length > 0) {
       setActiveItem(viewableItems[0].key);
     }

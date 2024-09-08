@@ -13,7 +13,7 @@ const Search = () => {
   const { query } = useLocalSearchParams();
   const { data: seachPost, refetch } = useAppwrite(() => getSearchPost(query));
   console.log(2, query);
-  // console.log(seachPost);
+  console.log(seachPost);
   useEffect(() => {
     refetch();
   }, [query]);

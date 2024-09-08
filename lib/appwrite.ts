@@ -6,7 +6,6 @@ import {
   Client,
   Databases,
   ID,
-  ImageGravity,
   Query,
   Storage,
 } from "react-native-appwrite";
@@ -90,7 +89,7 @@ export async function signIn({
 export const getCurrentUser = async () => {
   try {
     const currentAccount = await account.get();
-    // console.log(currentAccount);
+    console.log(currentAccount);
     if (!currentAccount) throw Error;
     const currentUser = await databases.listDocuments(
       databaseId,
@@ -106,7 +105,9 @@ export const getCurrentUser = async () => {
 // Register User
 export const getAllPosts = async () => {
   try {
-    const post = await databases.listDocuments(databaseId, vidoeCollectionId);
+    const post = await databases.listDocuments(databaseId, vidoeCollectionId, [
+      Query.orderDesc("$createdAt"),
+    ]);
     return post.documents;
   } catch (error) {
     throw error;
@@ -118,7 +119,7 @@ export const getAllTrendingPost = async () => {
       Query.orderDesc("$createdAt"),
       Query.limit(7),
     ]);
-    // console.log(2,post);
+    console.log(2, post);
     return post.documents;
   } catch (error) {
     throw error;
@@ -126,12 +127,12 @@ export const getAllTrendingPost = async () => {
 };
 export const getSearchPost = async (query: any) => {
   try {
-    // console.log(3, query);
+    console.log(3, query);
     const post = await databases.listDocuments(databaseId, vidoeCollectionId, [
       Query.search("title", query),
     ]);
 
-    // console.log(2, post);
+    console.log(2, post);
     return post.documents;
   } catch (error) {
     throw error;
@@ -139,12 +140,11 @@ export const getSearchPost = async (query: any) => {
 };
 export const getUserPost = async (userId: any) => {
   try {
-    // console.log(3, query);
     const post = await databases.listDocuments(databaseId, vidoeCollectionId, [
       Query.equal("users", userId),
     ]);
 
-    // console.log(2, post);
+    console.log(2, post);
     return post.documents;
   } catch (error) {
     throw error;
@@ -156,7 +156,7 @@ export const signOut = async () => {
     const session = await account.deleteSession("current");
     return session;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     throw error;
   }
 };
@@ -167,18 +167,12 @@ export const getFilePreview = async (fileId: string, type: string) => {
     if (type === "video") {
       fileUrl = storage.getFileView(storageId, fileId);
     } else if (type === "image") {
-      fileUrl = storage.getFilePreview(
-        storageId,
-        fileId,
-        2000,
-        2000,
-        "top",
-        100
-      );
+      fileUrl = storage.getFilePreview(storageId, fileId, 2000, 2000);
     } else {
       throw new Error("Invalid file type");
     }
     if (!fileUrl) throw Error;
+    console.log(type, fileUrl);
 
     return fileUrl;
   } catch (error: any) {
@@ -188,7 +182,6 @@ export const getFilePreview = async (fileId: string, type: string) => {
 
 export const uploadFile = async (file: DocumentPickerAsset, type: string) => {
   if (!file) return;
-  console.log(1);
   const { mimeType, ...rest } = file;
   const asset = { type: mimeType, ...rest };
   try {
@@ -197,8 +190,9 @@ export const uploadFile = async (file: DocumentPickerAsset, type: string) => {
       ID.unique(),
       asset as any
     );
-    console.log(2, file);
+    console.log(type, uploadFile);
     const fileUrl = await getFilePreview(uploadFile.$id, type);
+    console.log(type, fileUrl);
     return fileUrl;
   } catch (error: any) {
     throw new Error(error);
@@ -213,12 +207,12 @@ export const createVideo = async ({
   users,
 }: FormData) => {
   try {
-    // const [thumbnail, videoUrl] = await Promise.all([
-    //   uploadFile(video!, "video"),
-    //   uploadFile(image!, "image"),
-    // ]);
-    const videoUrl = await uploadFile(video!, "video");
-    const thumbnail = await uploadFile(image!, "image");
+    const [thumbnail, videoUrl] = await Promise.all([
+      uploadFile(image!, "image"),
+      uploadFile(video!, "video"),
+    ]);
+    // const videoUrl = await uploadFile(video!, "video");
+    // const thumbnail = await uploadFile(image!, "image");
 
     console.log(thumbnail);
     console.log(videoUrl);
@@ -228,9 +222,9 @@ export const createVideo = async ({
       ID.unique(),
       {
         title,
-        image,
+        thumbnail,
         prompt,
-        video,
+        video: videoUrl,
         users,
       }
     );

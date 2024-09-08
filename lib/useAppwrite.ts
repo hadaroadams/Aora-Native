@@ -10,7 +10,7 @@ const useAppwrite = (fn: () => any) => {
       const response = await fn();
       setData(response);
     } catch (error) {
-      console.log(error);
+      console.lconsole.log(error);
       throw error;
     } finally {
       setIsLoading(false);

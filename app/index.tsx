@@ -11,11 +11,10 @@ import { useGlobalContext } from "@/context/GlobalContext";
 
 const index = () => {
   const { isLoading, isLoggedIn, setUser, setisLoggedIn } = useGlobalContext()!;
-  // console.log(isLoading, isLoggedIn);
+  console.log(isLoading, isLoggedIn);
   if (!isLoading && isLoggedIn) return <Redirect href={"/home"} />;
   return (
     <>
-
       <SafeAreaView className="bg-primary h-full">
         <ScrollView>
           <View className="w-full items-center justify-center min-h-[90vh] px-4">

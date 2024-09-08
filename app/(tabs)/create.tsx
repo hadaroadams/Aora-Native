@@ -33,6 +33,7 @@ const Create = () => {
     thumbnail: null,
     video: null,
   });
+  console.log("ME", form);
   const openPicker = async (selectType: "image" | "video") => {
     const result = await DocumentPicker.getDocumentAsync({
       type:

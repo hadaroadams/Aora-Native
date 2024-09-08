@@ -16,8 +16,6 @@ const Profile = () => {
     useGlobalContext()!;
   const { data: post, refetch } = useAppwrite(() => getUserPost(user.$id));
   console.log(user);
-  // console.log(2, query);
-  // console.log(seachPost);
   const logOut = async () => {
     await signOut();
     setUser(null);

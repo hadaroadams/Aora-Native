@@ -25,10 +25,9 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const userReload = async () => {
-
     try {
       const user = await getCurrentUser();
-      // console.log(user);
+      console.log(user);
       if (!user) setisLoggedIn(false);
       else {
         setisLoggedIn(true);
@@ -36,7 +35,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       setisLoggedIn(false);
-      console.log(error);
+      console.lconsole.log(error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -44,9 +43,9 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   };
   useEffect(() => {
     userReload();
-    // console.log("hello1");
+    console.log("hello1");
   }, []);
-  // console.log(`userState:${isLoggedIn}`);
+  console.log(`userState:${isLoggedIn}`);
   return (
     <GlobalContext.Provider
       value={{ isLoggedIn, setisLoggedIn, user, setUser, isLoading }}
